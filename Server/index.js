@@ -3,11 +3,14 @@ import mongoose from "mongoose";
 import { APP_CONSTRAIN } from "./config/constant.js";
 import app from "./server.js";
 import connectDB from "./DB/connect.js";
+import urlRouter from './Route/url.Route.js';
 
-dotenv.config();
+dotenv.config({
+  path : './.env'
+});
+connectDB();
 
-
-  connectDB();
+app.use('/api/url' , urlRouter);
 
 
 app.listen( APP_CONSTRAIN.PORT  || 3000 ,() => {

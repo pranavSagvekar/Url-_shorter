@@ -7,4 +7,4 @@ class ThrowError extends Error {
 
 }
 
-export default {ThrowError};
+export default ThrowError;

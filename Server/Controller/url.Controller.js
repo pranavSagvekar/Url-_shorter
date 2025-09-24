@@ -2,7 +2,7 @@ import AsyncHandler from '../Utils/AsyncHandler.js';
 import { ApiResponce } from '../Utils/ApiResponce.js';
 import ThrowError from '../Utils/apiError.js';
 import Url from '../Model/urlModel.js';
-import mongoose from 'mongoose';
+import { urlClick } from '../Model/urlClick.Model.js';
 
 export const createShortUrl = AsyncHandler(async (req, res) => {
     
@@ -16,10 +16,31 @@ export const createShortUrl = AsyncHandler(async (req, res) => {
         userId : req.user._id ,
         originalUrl,
         shortCode,
-        shortUrl
+        shortUrl,
+        clicks : 0
     });
 
     res.status(201).json(
         new ApiResponce(201, newUrl, "Short URL created successfully")
     );
 });
+
+
+export const cheakUrl = AsyncHandler(async (req , res) => {
+    const {shortcode} = req.params;
+    const url = await Url.findOne({shortcode});
+    if(!url) throw  new ThrowError(404 , "User not found");
+
+    await urlClick.create({
+    urlID: url._id,
+    ipAddress: req.ip,
+    referrer: req.get("referer") || null,     
+    userAgent: req.get("user-agent") || null  
+    });
+
+    url.clicks  = url.clicks + 1;
+    await url.save();
+
+
+    res.redirect(url.originalUrl)
+})

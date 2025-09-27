@@ -27,8 +27,8 @@ export const createShortUrl = AsyncHandler(async (req, res) => {
 
 
 export const cheakUrl = AsyncHandler(async (req , res) => {
-    const {shortcode} = req.params;
-    const url = await Url.findOne({shortcode});
+    const {shortCode} = req.params;
+    const url = await Url.findOne({shortCode});
     if(!url) throw  new ThrowError(404 , "User not found");
 
     await urlClick.create({
@@ -44,3 +44,27 @@ export const cheakUrl = AsyncHandler(async (req , res) => {
 
     res.redirect(url.originalUrl)
 })
+
+
+export const getData = AsyncHandler(async (req , res) => {
+    const {shortCode} = req.params;
+
+    const url = await Url.findOne({shortCode});
+    if(!url) throw  new ThrowError(404 , "User not found");
+
+    const clicks = await urlClick.find({urlID : url._id}).sort({createdAt : -1});
+
+     res.status(200).json({
+    success: true,
+    shortUrl: url.shortUrl,
+    originalUrl: url.originalUrl,
+    totalClicks: url.clicks,
+    clicks: clicks.map(c => ({
+      ipAddress: c.ipAddress,
+      referrer: c.referrer,
+      userAgent: c.userAgent,
+      createdAt: c.createdAt
+    }))
+});
+})
+

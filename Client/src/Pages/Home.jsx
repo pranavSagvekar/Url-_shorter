@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { motion } from "framer-motion";
 import { Zap, Shield, ChartColumn, Link, Book , Copy  , SquareArrowOutUpRight} from "lucide-react";
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
-import axios from 'axios';
+import useAuth from '../Hooks/useAuth';
+import useUrl from '../Hooks/useUrl';
 import { toast } from 'sonner';
 import Loader from '../Components/Loader';
 import validator from 'validator';
@@ -11,7 +11,8 @@ import validator from 'validator';
 
 function Home() {
   const navigate = useNavigate();
-  const { isLoggedIn, loading , shortUrl , openShortUrl } = useAuth();
+  const { isLoggedIn, loading ,  } = useAuth();
+  const {shortUrl , openShortUrl} = useUrl();
 
   const [url, setUrl] = useState("");
   const [shortenUrlResult , setShortenUrlResult] = useState("");
@@ -42,7 +43,7 @@ function Home() {
   if (loading) {
     return (
       <div className="flex justify-between items-center border-b border-gray-300 px-4 py-2 m-3">
-        <div> {Loader}</div>
+        <Loader / >
       </div>
     );
   }
@@ -64,7 +65,7 @@ function Home() {
   return (
     <>
       <div className="flex flex-col">
-        {/* Header */}
+      
         <div className="flex items-center justify-center my-20 mb-8 ">
           <h1 className="text-5xl text-center text-shadow-gray-900">
             Shorten Your Links,
@@ -73,7 +74,7 @@ function Home() {
           </h1>
         </div>
 
-        {/* Subtitle */}
+      
         <div className="flex items-center justify-center ">
           <p className="text-center text-xl text-gray-500">
             Transform long, complex URLs into short, shareable links.
@@ -83,11 +84,11 @@ function Home() {
           </p>
         </div>
 
-        {/* Input + Button */}
+      
         <div>
           <div className="flex justify-center mt-10 ">
             <div className="flex flex-col border-2 border-gray-200 p-6 rounded-2xl shadow-2xl w-full max-w-lg ">
-              {/* Header */}
+             
               <div className="flex items-center gap-2 mb-4 text-gray-800 font-medium justify-center  ">
                 <Link size={22} strokeWidth={1.8} />
                 <span>URL Shortener</span>
@@ -200,12 +201,12 @@ function Home() {
           </div>
         </div>
 
-        {/* Why Choose Section */}
+      
         <div className="flex align-middle justify-center pt-24 pb-10">
           <h1 className="text-3xl">Why Choose ShortyLink?</h1>
         </div>
         <div className="flex flex-col items-center justify-center gap-6 px-10 pb-30 md:flex-row">
-          {/* Card 1 */}
+        
           <motion.div
             className="border border-gray-200 rounded-xl p-4 transition-shadow duration-200 ease-in-out hover:shadow-md cursor-pointer"
             whileHover={{ scale: 1.05 }}
@@ -223,7 +224,7 @@ function Home() {
             </div>
           </motion.div>
 
-          {/* Card 2 */}
+   
           <motion.div
             className="border border-gray-200 rounded-xl p-4 transition-shadow duration-500 ease-in-out hover:shadow-md cursor-pointer"
             whileHover={{ scale: 1.05 }}
@@ -241,7 +242,7 @@ function Home() {
             </div>
           </motion.div>
 
-          {/* Card 3 */}
+   
           <motion.div
             className="border border-gray-200 rounded-xl p-4 transition-shadow duration-500 ease-in-out hover:shadow-md cursor-pointer"
             whileHover={{ scale: 1.05 }}

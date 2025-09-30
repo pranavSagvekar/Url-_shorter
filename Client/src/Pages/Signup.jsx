@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, User, Mail, Eye, EyeOff, Lock } from 'lucide-react';
 import { motion } from 'framer-motion';
-import useAuth from '../hooks/useAuth';
+import useAuth from '../Hooks/useAuth';
 
 function Signup() {
   const navigate = useNavigate();

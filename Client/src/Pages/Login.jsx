@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Lock, Mail, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
-import useAuth from '../hooks/useAuth';
+import useAuth from '../Hooks/useAuth';
 import { toast } from 'sonner';
 
 function Login() {

@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
           setUser(res.data.user);
         }
       } catch (err) {
-        // Handle error
+        console.error("User verification failed:", err);
       } finally {
         setLoading(false);
       }
@@ -42,11 +42,7 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (res.data.success) {
-        
         const { user, token } = res.data.message;
-
-        console.log("Token from backend :", token); // This should now log the token correctly
-
         localStorage.setItem("token", token);
         setIsLoggedIn(true);
         setUser(user);
@@ -57,11 +53,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-
   const signup = async (name, email, password) => {
     try {
-      const res = await axios.post("http://localhost:5000/api/register",{
-        name , email , password
+      const res = await axios.post("http://localhost:5000/api/register", {
+        name,
+        email,
+        password,
       });
 
       if (res.data.success) {
@@ -72,9 +69,9 @@ export const AuthProvider = ({ children }) => {
         navigate("/dashboard");
       }
     } catch (error) {
-      console.log("Signup failed:", error);
+      console.error("Signup failed:", error);
     }
-  }
+  };
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -83,35 +80,9 @@ export const AuthProvider = ({ children }) => {
     navigate("/login");
   };
 
-  const shortUrl = async (longUrl) => {
-    try { 
-      const token = localStorage.getItem("token");
-      const headers = {};
-      if(token){
-        headers.Authorization = `Bearer ${token}`;
-      }
-      
-      const res = await axios.post('http://localhost:5000/api/url/' ,{originalUrl : longUrl} , {headers}) ;
-
-      if(res.data.success){
-        return res.data.data.shortUrl;
-      }
-    } catch (error) {
-      console.log("Error is : " + error );
-      return null;
-    }
-  }
-
-  const openShortUrl = (shortUrl) => {
-    
-    
-    window.open(shortUrl , "_blank")
-  } 
-
-  const value = { isLoggedIn, user, loading, login, logout , signup , shortUrl , openShortUrl };
+  const value = { isLoggedIn, user, loading, login, logout, signup };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export default AuthContext;
-

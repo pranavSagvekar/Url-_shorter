@@ -7,13 +7,13 @@ import Signup from "./Pages/Signup";
 import DashBoard from "./Pages/DashBoard";
 import { motion, AnimatePresence } from "framer-motion";
 import { AuthProvider } from "./Context/AuthContext.jsx";
-import { Toaster, toast } from "sonner";
-
+import { UrlProvider } from "./Context/UrlContext.jsx";   
+import { Toaster } from "sonner";
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -20 }
+  exit: { opacity: 0, y: -20 },
 };
 
 const PageWrapper = ({ children }) => (
@@ -34,7 +34,7 @@ function AppContent() {
 
   return (
     <>
-      <Toaster/>
+      <Toaster />
       <Header />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
@@ -52,11 +52,12 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <AppContent />
+        <UrlProvider>  
+          <AppContent />
+        </UrlProvider>
       </AuthProvider>
     </Router>
   );
 }
 
 export default App;
-

@@ -1,5 +1,5 @@
 import express from 'express';
-import { cheakUrl, createShortUrl, getData } from '../Controller/url.Controller.js';
+import {  createShortUrl,  totalClicks , getAllUrlsDataOneByOne } from '../Controller/url.Controller.js';
 import { cheakToken } from '../Middleware/auth.Middleware.js';
 
 const router = express.Router();
@@ -8,6 +8,7 @@ const router = express.Router();
 
 // Public creation
 router.post("/",  cheakToken ,createShortUrl);
-router.get("/clicks/:shortCode", getData);
+router.get("/totalClick" , cheakToken , totalClicks)
+router.get("/initialData" , cheakToken , getAllUrlsDataOneByOne)
 
 export default router;

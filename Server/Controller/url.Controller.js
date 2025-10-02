@@ -1,6 +1,6 @@
 import AsyncHandler from '../Utils/AsyncHandler.js';
 import { ApiResponce } from '../Utils/ApiResponce.js';
-import ThrowError from '../Utils/apiError.js';
+import ThrowError from '../Utils/ApiError.js';
 import Url from '../Model/urlModel.js';
 import { urlClick } from '../Model/urlClick.Model.js';
 import mongoose from 'mongoose';

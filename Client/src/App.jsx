@@ -4,11 +4,13 @@ import Header from "./Components/Header";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
-import DashBoard from "./Pages/DashBoard";
+import DashBoard from "./Pages/Dashboard.jsx";
+import Error from "./Pages/Error.jsx";
 import { motion, AnimatePresence } from "framer-motion";
 import { AuthProvider } from "./Context/AuthContext.jsx";
 import { UrlProvider } from "./Context/UrlContext.jsx";   
 import { Toaster } from "sonner";
+import Data from "./Pages/Data.jsx";
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -42,6 +44,8 @@ function AppContent() {
           <Route path="/login" element={<PageWrapper><Login /></PageWrapper>} />
           <Route path="/signup" element={<PageWrapper><Signup /></PageWrapper>} />
           <Route path="/dashboard" element={<PageWrapper><DashBoard /></PageWrapper>} />
+          <Route path="/error" element= {<PageWrapper><Error/></PageWrapper>} />
+          <Route path='/data/:shortcode' element = {<PageWrapper><Data /></PageWrapper>} />
         </Routes>
       </AnimatePresence>
     </>

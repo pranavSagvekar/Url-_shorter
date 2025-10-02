@@ -13,6 +13,8 @@ export const createShortUrl = AsyncHandler(async (req, res) => {
     const shortCode = Math.random().toString(36).substring(2, 8); 
     const shortUrl = `${process.env.BASE_URL}/${shortCode}`;
 
+    
+
     const newUrl = await Url.create({
         userId : req.user._id ,
         originalUrl,
@@ -41,7 +43,6 @@ export const cheakUrl = AsyncHandler(async (req , res) => {
 
     url.clicks  = url.clicks + 1;
     await url.save();
-
 
     res.redirect(url.originalUrl)
 })
@@ -124,7 +125,8 @@ export const getAllUrlsDataOneByOne = AsyncHandler(async (req , res) => {
         shortUrl : url.shortUrl ,
         clicks : url.clicks,
         createdAt : formateDate(url.createdAt) ,
-        shortcode : url.shortCode
+        shortcode : url.shortCode,
+        
     }))
 
     res.status(200).json(new ApiResponce(true , "Data added successfully" , data));

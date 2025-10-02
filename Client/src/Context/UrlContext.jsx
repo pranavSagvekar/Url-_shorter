@@ -1,11 +1,17 @@
 import { createContext, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 const UrlContext = createContext();
+
 
 export const UrlProvider = ({ children }) => {
   const [totalclick, setTotalclick] = useState({ totalclick: 0, totalurl: 0 });
   const [initialData, setInitialData] = useState([]);
+  const [getdataperurl, setGetdataperurl] = useState(null)
+  const navigate = useNavigate();
+
 
   const shortUrl = async (longUrl) => {
     try {
@@ -27,11 +33,21 @@ export const UrlProvider = ({ children }) => {
     } catch (error) {
       console.error("Error creating short URL:", error);
       return null;
+      
+
+      
     }
   };
 
-  const openShortUrl = (shortUrl) => {
-    window.open(shortUrl, "_blank");
+  const openShortUrl = (shortUrl , originalUrl) => {
+    
+    
+    if(originalUrl.startsWith("http://")  || originalUrl.startsWith("https://")){
+      window.open(shortUrl, "_blank");
+    }else{
+      navigate('/error')
+    }
+
   };
 
   const fetchTotalclick = async () => {
@@ -48,9 +64,11 @@ export const UrlProvider = ({ children }) => {
       );
       if (res.data.success) {
         setTotalclick(res.data.data);
+        
       }
     } catch (error) {
       console.error("Error fetching total clicks:", error);
+
     }
   };
 
@@ -74,6 +92,29 @@ export const UrlProvider = ({ children }) => {
     }
   };
 
+
+const getDataofEach = async (shortCode) => {
+  try {
+    const token = localStorage.getItem("token");
+    const headers = {};
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+
+    const res = await axios.get(`http://localhost:5000/api/url/data/${shortCode}`, { headers });
+
+    if (res.data.success) {
+      setGetdataperurl(res.data); 
+      console.log(setGetdataperurl.longUrl)
+    }
+  } catch (error) {
+    console.log("Error fetching data: ", error);
+    setGetdataperurl(null);
+  }
+};
+
+ 
+
   const value = {
     shortUrl,
     openShortUrl,
@@ -81,6 +122,9 @@ export const UrlProvider = ({ children }) => {
     totalclick,
     fetchInitialData,
     initialData,
+    getDataofEach,
+    getdataperurl
+  
   };
 
   return <UrlContext.Provider value={value}>{children}</UrlContext.Provider>;

@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
         return;
       }
       try {
-        const res = await axios.get("http://localhost:5000/api/verify", {
+        const res = await axios.get("https://urlshortner-gnge.onrender.com/api/verify", {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (res.data.success) {
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const res = await axios.post("http://localhost:5000/api/login", {
+      const res = await axios.post("https://urlshortner-gnge.onrender.com/api/login", {
         email,
         password,
       });
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (name, email, password) => {
     try {
-      const res = await axios.post("http://localhost:5000/api/register", {
+      const res = await axios.post("https://urlshortner-gnge.onrender.com/api/register", {
         name,
         email,
         password,

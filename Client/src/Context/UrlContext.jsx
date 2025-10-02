@@ -22,7 +22,7 @@ export const UrlProvider = ({ children }) => {
       }
 
       const res = await axios.post(
-        "http://localhost:5000/api/url/",
+        "https://urlshortner-gnge.onrender.com/api/url/",
         { originalUrl: longUrl },
         { headers }
       );
@@ -59,7 +59,7 @@ export const UrlProvider = ({ children }) => {
       }
 
       const res = await axios.get(
-        "http://localhost:5000/api/url/totalClick",
+        "https://urlshortner-gnge.onrender.com/api/url/totalClick",
         { headers }
       );
       if (res.data.success) {
@@ -81,7 +81,7 @@ export const UrlProvider = ({ children }) => {
       }
 
       const res = await axios.get(
-        "http://localhost:5000/api/url/initialData",
+        "https://urlshortner-gnge.onrender.com/api/url/initialData",
         { headers }
       );
       if (res.data.success) {
@@ -101,7 +101,7 @@ const getDataofEach = async (shortCode) => {
       headers.Authorization = `Bearer ${token}`;
     }
 
-    const res = await axios.get(`http://localhost:5000/api/url/data/${shortCode}`, { headers });
+    const res = await axios.get(`https://urlshortner-gnge.onrender.com/api/url/data/${shortCode}`, { headers });
 
     if (res.data.success) {
       setGetdataperurl(res.data); 

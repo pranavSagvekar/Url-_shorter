@@ -3,7 +3,7 @@ import AsyncHandler from "../Utils/AsyncHandler.js";
 import { ApiResponce } from "../Utils/ApiResponce.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import ThrowError from "../Utils/apiError.js";
+import ThrowError from "../Utils/ApiError.js";
 
 // Generate token
 const generateToken = (user) => {

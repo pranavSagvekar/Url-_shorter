@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../Hooks/useAuth.js";
 import useUrl from "../Hooks/useUrl";
 import { Link, ChartColumn, Plus, Search } from "lucide-react";
 import { motion } from "framer-motion";
